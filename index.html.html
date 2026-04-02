@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Wealth Window™ — Brendan Gustafson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #162236;
+    --navy-light: #1e3050;
+    --gold: #c9a84c;
+    --gold-light: #e2c47a;
+    --gold-pale: #f5e9c8;
+    --cream: #faf6ef;
+    --white: #ffffff;
+    --text-muted: #8a9ab5;
+    --text-body: #c8d4e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(13,27,42,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    animation: fadeDown 0.8s ease forwards;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    color: var(--gold-light);
+  }
+  .nav-logo span { color: var(--cream); font-weight: 400; font-style: italic; }
+  .nav-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.55rem 1.4rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 20% 80%, rgba(30,48,80,0.6) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 760px;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.7s 0.3s ease forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    font-weight: 700;
+    line-height: 1.08;
+    color: var(--white);
+    margin-bottom: 1.75rem;
+    opacity: 0; animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+    display: block;
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--text-body);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+  .hero-sub strong { color: var(--cream); font-weight: 500; }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 600; font-size: 0.85rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-light);
+    font-weight: 500; font-size: 0.85rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stat-row {
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 2rem;
+    opacity: 0; animation: fadeLeft 1s 1.1s ease forwards;
+  }
+  .stat-card {
+    background: rgba(30,48,80,0.5);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 7rem 4rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-tag::after { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  h2 em { font-style: italic; color: var(--gold-light); }
+  .section-lead {
+    font-size: 1.05rem; font-weight: 300;
+    color: var(--text-body);
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  /* ── WHAT CHANGED ── */
+  .changed-section { background: var(--navy-mid); }
+  .changed-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center; margin-top: 4rem;
+  }
+  .shift-boxes { display: flex; flex-direction: column; gap: 1.25rem; }
+  .shift-box {
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+  .shift-box.before {
+    background: rgba(255,255,255,0.03);
+    border-color: rgba(138,154,181,0.3);
+  }
+  .shift-box.after {
+    background: rgba(201,168,76,0.07);
+    border-color: var(--gold);
+  }
+  .shift-box-label {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 0.5rem;
+  }
+  .shift-box.after .shift-box-label { color: var(--gold); }
+  .shift-box-text { font-size: 0.95rem; color: var(--cream); line-height: 1.6; }
+
+  .insight-pull {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2.5rem;
+  }
+  .insight-pull blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--gold-light);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .insight-attribution {
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline-section { background: var(--navy); }
+  .timeline-wrap { margin-top: 4rem; position: relative; }
+  .timeline-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 2.25rem; left: 12.5%; right: 12.5%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(138,154,181,0.3) 0%, rgba(201,168,76,0.8) 50%, var(--gold) 100%);
+  }
+  .timeline-item {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 0 1rem;
+  }
+  .timeline-dot {
+    width: 4.5rem; height: 4.5rem;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  .timeline-item:hover .timeline-dot { transform: scale(1.1); }
+  .timeline-dot.dim {
+    background: rgba(30,48,80,0.8);
+    border: 2px solid rgba(138,154,181,0.3);
+    color: var(--text-muted);
+  }
+  .timeline-dot.hot {
+    background: var(--gold);
+    border: 2px solid var(--gold-light);
+    color: var(--navy);
+    box-shadow: 0 0 30px rgba(201,168,76,0.4);
+  }
+  .timeline-year {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 0.4rem;
+  }
+  .timeline-item.active .timeline-year { color: var(--gold); }
+  .timeline-title {
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .timeline-desc {
+    font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
+  }
+  .timeline-item.active .timeline-desc { color: var(--text-body); }
+  .timeline-badge {
+    margin-top: 0.6rem;
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* ── WHY IT WORKS ── */
+  .why-section { background: var(--navy-mid); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px; margin-top: 4rem;
+    border: 1.5px solid rgba(201,168,76,0.15);
+  }
+  .why-card {
+    background: var(--navy-mid);
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+  .why-card:hover { background: rgba(201,168,76,0.04); }
+  .why-card::after {
+    content: ''; position: absolute;
+    right: -0.75px; top: 15%; bottom: 15%;
+    width: 1.5px; background: rgba(201,168,76,0.15);
+  }
+  .why-card:nth-child(2n)::after, .why-card:nth-last-child(-n+2)::after { display: none; }
+  .why-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700;
+    color: rgba(201,168,76,0.2);
+    line-height: 1; margin-bottom: 0.75rem;
+  }
+  .why-title {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.75rem;
+  }
+  .why-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .why-divider { grid-column: 1 / -1; height: 1.5px; background: rgba(201,168,76,0.15); }
+
+  /* ── DEAL MODEL ── */
+  .deal-section { background: var(--navy); }
+  .deal-layout {
+    display: grid; grid-template-columns: 1.1fr 0.9fr;
+    gap: 5rem; align-items: start; margin-top: 4rem;
+  }
+  .deal-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .deal-card-header {
+    background: var(--gold);
+    padding: 1.25rem 2rem;
+  }
+  .deal-card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  .deal-rows { padding: 0 2rem; }
+  .deal-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .deal-row:last-child { border-bottom: none; }
+  .deal-row-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 400; }
+  .deal-row-value { font-size: 1rem; font-weight: 600; color: var(--cream); }
+  .deal-row.highlight .deal-row-label { color: var(--gold); font-weight: 500; }
+  .deal-row.highlight .deal-row-value { color: var(--gold-light); font-size: 1.15rem; }
+
+  .deal-outcomes { display: flex; flex-direction: column; gap: 1.5rem; }
+  .outcome-item {
+    padding: 1.75rem 2rem;
+    background: rgba(201,168,76,0.05);
+    border-left: 3px solid var(--gold);
+  }
+  .outcome-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--gold-light);
+    display: block; margin-bottom: 0.3rem;
+  }
+  .outcome-label { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+  .deal-disclaimer {
+    margin-top: 2rem;
+    font-size: 0.72rem; color: rgba(138,154,181,0.5);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── BUY BOX ── */
+  .buybox-section { background: var(--navy-mid); }
+  .criteria-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; margin-top: 4rem;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+  .criteria-item {
+    background: var(--navy-mid);
+    padding: 2.25rem 2rem;
+    transition: background 0.3s;
+  }
+  .criteria-item:hover { background: rgba(201,168,76,0.04); }
+  .criteria-icon {
+    font-size: 1.5rem; margin-bottom: 1rem;
+  }
+  .criteria-title {
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.5rem;
+  }
+  .criteria-detail { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+  .criteria-highlight { color: var(--gold-light); font-weight: 500; }
+
+  /* ── MISTAKES ── */
+  .mistakes-section { background: var(--navy); }
+  .mistakes-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    margin-top: 4rem; align-items: start;
+  }
+  .mistake-list { display: flex; flex-direction: column; gap: 1rem; }
+  .mistake-item {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255,80,80,0.04);
+    border: 1px solid rgba(255,80,80,0.1);
+  }
+  .mistake-x {
+    color: #e05555; font-size: 1.1rem; font-weight: 700;
+    flex-shrink: 0; margin-top: 0.1rem;
+  }
+  .mistake-text { font-size: 0.88rem; color: var(--text-body); line-height: 1.6; }
+  .mistake-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+  .advantage-box {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 2.5rem;
+    position: sticky; top: 8rem;
+  }
+  .advantage-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.5rem;
+  }
+  .advantage-box h3 em { font-style: italic; color: var(--gold-light); }
+  .advantage-box p {
+    font-size: 0.88rem; color: var(--text-muted);
+    line-height: 1.75; margin-bottom: 1.5rem;
+  }
+  .advantage-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .advantage-point {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    font-size: 0.85rem; color: var(--text-body); line-height: 1.5;
+  }
+  .advantage-check { color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+  /* ── ABOUT ── */
+  .about-section { background: var(--navy-mid); }
+  .about-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: center; margin-top: 4rem;
+  }
+  .about-bio { font-size: 0.95rem; color: var(--text-body); line-height: 1.85; }
+  .about-bio p { margin-bottom: 1.25rem; }
+  .about-bio strong { color: var(--cream); font-weight: 500; }
+  .about-credentials {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(201,168,76,0.1); margin-top: 2rem;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+  .credential {
+    background: var(--navy-mid);
+    padding: 1.25rem 1.5rem;
+  }
+  .credential-label {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 0.3rem;
+  }
+  .credential-value { font-size: 0.88rem; color: var(--cream); font-weight: 500; }
+
+  .testimonial-block {
+    background: var(--navy-light);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2.5rem;
+  }
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--cream);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .testimonial-quote::before {
+    content: '"';
+    position: absolute; left: 0; top: -0.2rem;
+    font-size: 3rem; color: var(--gold); line-height: 1;
+    font-family: 'Playfair Display', serif;
+  }
+  .testimonial-name {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .testimonial-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--navy);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .cta-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+  .cta-section h2 { margin-bottom: 1rem; }
+  .cta-section .section-lead { margin: 0 auto 2.5rem; text-align: center; max-width: 480px; }
+  .cta-contact-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; margin-top: 3rem;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.1);
+    max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+  .cta-contact-item {
+    background: var(--navy);
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: background 0.25s;
+  }
+  .cta-contact-item:hover { background: rgba(201,168,76,0.06); }
+  .cta-contact-label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 0.4rem;
+  }
+  .cta-contact-value { font-size: 0.85rem; color: var(--gold-light); font-weight: 500; }
+  .cta-form { margin-top: 3rem; display: flex; gap: 0; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .cta-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-right: none;
+    padding: 1rem 1.25rem;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.25s;
+  }
+  .cta-input::placeholder { color: var(--text-muted); }
+  .cta-input:focus { border-color: var(--gold); }
+  .cta-form .btn-primary { white-space: nowrap; padding: 1rem 1.75rem; font-size: 0.78rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; color: var(--gold-light);
+  }
+  .footer-copy { font-size: 0.72rem; color: var(--text-muted); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(32px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-stat-row { display: none; }
+    .changed-grid, .deal-layout, .mistakes-layout,
+    .about-layout, .timeline-track { grid-template-columns: 1fr; }
+    .why-grid, .criteria-grid { grid-template-columns: 1fr; }
+    .cta-contact-grid { grid-template-columns: 1fr; }
+    .cta-form { flex-direction: column; }
+    .cta-input { border-right: 1px solid rgba(201,168,76,0.25); border-bottom: none; }
+    .timeline-track::before { display: none; }
+    .timeline-track { gap: 2rem; }
+    footer { flex-direction: column; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">College Wealth Window<span>™</span></div>
+  <a href="#contact" class="nav-cta">Get the Strategy</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Colorado School of Mines · Investment Strategy</div>
+    <h1>Skip the Dorms.<br><em>Own the Window.</em></h1>
+    <p class="hero-sub">
+      New housing policies at Mines changed everything. <strong>The first two years are now on-campus.</strong>
+      That compressed the off-campus opportunity — and made junior & senior year the most investable 24 months in college real estate.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start the Conversation</a>
+      <a href="#strategy" class="btn-ghost">See the Strategy</a>
+    </div>
+  </div>
+  <div class="hero-stat-row">
+    <div class="stat-card">
+      <span class="stat-num">~80%</span>
+      <div class="stat-label">Potential ROI<br>in 2 years</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">2yr</span>
+      <div class="stat-label">The Wealth<br>Window</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">$50K+</span>
+      <div class="stat-label">Projected<br>Equity Gain</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT CHANGED -->
+<section class="changed-section" id="strategy">
+  <div class="section-inner">
+    <div class="section-tag">The Policy Shift</div>
+    <h2>Most Buyers Haven't<br><em>Adjusted Yet</em></h2>
+    <p class="section-lead">In March 2024, Mines formalized a 2-year on-campus housing requirement. The off-campus window didn't disappear — it just moved.</p>
+
+    <div class="changed-grid">
+      <div class="shift-boxes">
+        <div class="shift-box before">
+          <div class="shift-box-label">Before the Policy</div>
+          <div class="shift-box-text">Parents bought for freshman year. The strategy was simple: 4-year house-hack with immediate occupancy. Sophomores were your sweet spot tenant.</div>
+        </div>
+        <div class="shift-box after">
+          <div class="shift-box-label">After the Policy</div>
+          <div class="shift-box-text">Freshmen and sophomores are locked on campus. Off-campus supply just tightened. Demand for junior and senior housing is now more intense — and more predictable — than ever before.</div>
+        </div>
+      </div>
+      <div class="insight-pull">
+        <blockquote>"The policy didn't kill the strategy. It professionalizes it."</blockquote>
+        <div class="insight-attribution">— The College Wealth Window™ Framework</div>
+        <br>
+        <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.75;">
+          The 800 new on-campus beds are earmarked specifically for freshmen and sophomores. That redirects demand — upperclassmen still need off-campus housing, and the inventory of quality properties near campus hasn't grown. The result is a more predictable, concentrated demand pool in Years 3 and 4. That's the window most buyers are missing.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="section-inner">
+    <div class="section-tag">The 2-Year Window</div>
+    <h2>Buy for the <em>Right Two Years</em></h2>
+    <p class="section-lead">The strategy is simple: stop fighting the policy and start aligning with it. Buy during sophomore year. Move in junior year. Capture the highest-demand 24 months in student housing.</p>
+
+    <div class="timeline-wrap">
+      <div class="timeline-track">
+        <div class="timeline-item">
+          <div class="timeline-dot dim">1</div>
+          <div class="timeline-year">Year One</div>
+          <div class="timeline-title">Freshman Year</div>
+          <div class="timeline-desc">On-campus required. Focus on finding the right property.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dim">2</div>
+          <div class="timeline-year">Year Two</div>
+          <div class="timeline-title">Sophomore Year</div>
+          <div class="timeline-desc">Still on-campus. <strong style="color:var(--cream);">Best time to buy</strong> before competition arrives.</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-dot hot">3</div>
+          <div class="timeline-year">Year Three</div>
+          <div class="timeline-title">Junior Year</div>
+          <div class="timeline-desc">Move in. Rent extra rooms. The wealth window opens.</div>
+          <div class="timeline-badge">Window Opens 🔥</div>
+        </div>
+        <div class="timeline-item active">
+          <div class="timeline-dot hot">4</div>
+          <div class="timeline-year">Year Four</div>
+          <div class="timeline-title">Senior Year</div>
+          <div class="timeline-desc">Full occupancy. Strong exit. Sell or hold.</div>
+          <div class="timeline-badge">Maximum ROI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT WORKS -->
+<section class="why-section">
+  <div class="section-inner">
+    <div class="section-tag">The Case for Upperclassmen</div>
+    <h2>Why the Final 2 Years<br><em>Perform Better</em></h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-number">01</div>
+        <div class="why-title">Better Tenants</div>
+        <div class="why-desc">Juniors and seniors are more independent, more financially stable, and less likely to cause damage. They've outgrown the freshman experience and want something closer to real life.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-number">02</div>
+        <div class="why-title">Higher Willingness to Pay</div>
+        <div class="why-desc">Upperclassmen are done with dorms. They value privacy, parking, and space — and they (or their parents) will pay a premium for a well-configured property near campus.</div>
+      </div>
+      <div class="why-divider"></div>
+      <div class="why-card">
+        <div class="why-number">03</div>
+        <div class="why-title">Predictable Demand Window</div>
+        <div class="why-desc">The policy creates a reliable 2-year off-campus window for every student at Mines. You know exactly when your tenants need housing — and for how long. That predictability makes planning and occupancy far more manageable.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-number">04</div>
+        <div class="why-title">Cleaner Exit Story</div>
+        <div class="why-desc">You're not selling to a panicked freshman parent. Your buyers are investors, strategy-minded families, or traditional homeowners — all higher-quality conversations.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEAL MODEL -->
+<section class="deal-section" id="numbers">
+  <div class="section-inner">
+    <div class="section-tag">The Numbers</div>
+    <h2>What a <em>2-Year Hold</em> Can Look Like</h2>
+    <p class="section-lead">This is a realistic model — not a best-case fantasy. The real return isn't just appreciation. It's the cost of housing your student offset by real rental income.</p>
+
+    <div class="deal-layout">
+      <div>
+        <div class="deal-card">
+          <div class="deal-card-header"><h3>Sample Property Model</h3></div>
+          <div class="deal-rows">
+            <div class="deal-row">
+              <div class="deal-row-label">Purchase Price</div>
+              <div class="deal-row-value">$650,000</div>
+            </div>
+            <div class="deal-row">
+              <div class="deal-row-label">Down Payment (10%)</div>
+              <div class="deal-row-value">$65,000</div>
+            </div>
+            <div class="deal-row">
+              <div class="deal-row-label">Loan Amount</div>
+              <div class="deal-row-value">$585,000</div>
+            </div>
+            <div class="deal-row">
+              <div class="deal-row-label">Est. Rate</div>
+              <div class="deal-row-value">~6.5%</div>
+            </div>
+            <div class="deal-row">
+              <div class="deal-row-label">Monthly PITI</div>
+              <div class="deal-row-value">~$4,400</div>
+            </div>
+            <div class="deal-row">
+              <div class="deal-row-label">4 Roommates @ $1,050</div>
+              <div class="deal-row-value">$4,200/mo</div>
+            </div>
+            <div class="deal-row highlight">
+              <div class="deal-row-label">Net Monthly Carry</div>
+              <div class="deal-row-value">~$200</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deal-outcomes">
+        <div class="outcome-item">
+          <span class="outcome-value">~$40K</span>
+          <div class="outcome-label">Appreciation gain at 3% annually over 2-year hold</div>
+        </div>
+        <div class="outcome-item">
+          <span class="outcome-value">~$12K</span>
+          <div class="outcome-label">Principal paydown over 24 months</div>
+        </div>
+        <div class="outcome-item">
+          <span class="outcome-value">~$52K</span>
+          <div class="outcome-label">Total projected gain on ~$65K invested</div>
+        </div>
+        <div class="outcome-item" style="border-left-color: var(--gold-light);">
+          <span class="outcome-value" style="color: var(--gold);">~80%</span>
+          <div class="outcome-label">Return on invested capital in 2 years — plus the cost of your student's housing was covered</div>
+        </div>
+        <p class="deal-disclaimer">
+          These projections are illustrative and based on conservative assumptions. Actual results will vary based on market conditions, property specifics, and financing. This is not financial advice.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUY BOX -->
+<section class="buybox-section" id="criteria">
+  <div class="section-inner">
+    <div class="section-tag">Property Criteria</div>
+    <h2>What Makes a <em>Good Investment</em> Near Mines</h2>
+    <p class="section-lead">Not every house near campus is a good investment. The right property has specific characteristics — and most buyers don't know what to look for.</p>
+
+    <div class="criteria-grid">
+      <div class="criteria-item">
+        <div class="criteria-icon">📍</div>
+        <div class="criteria-title">Proximity to Campus</div>
+        <div class="criteria-detail">Within <span class="criteria-highlight">3–5 miles of Mines</span>. Properties that fit the 4+ bedroom profile under $750K are scarce within a mile — expanding the radius opens up significantly more inventory without meaningfully hurting tenant demand.</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-icon">🛏</div>
+        <div class="criteria-title">Bedroom Count</div>
+        <div class="criteria-detail"><span class="criteria-highlight">4–5 bedrooms minimum</span>, or strong potential to add rooms. The rent-by-the-room math only works at scale.</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-icon">🚗</div>
+        <div class="criteria-title">Parking</div>
+        <div class="criteria-detail"><span class="criteria-highlight">3+ off-street spots</span>. In Golden, parking is a dealbreaker for upperclassmen tenants. Don't overlook it.</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-icon">🏗</div>
+        <div class="criteria-title">Basement Potential</div>
+        <div class="criteria-detail">Unfinished basements are <span class="criteria-highlight">hidden value</span>. An added bedroom or second living space changes the rent model entirely.</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-icon">🏘</div>
+        <div class="criteria-title">No Restrictive HOA</div>
+        <div class="criteria-detail">HOA restrictions can kill rent-by-the-room strategies. We <span class="criteria-highlight">screen for this upfront</span> before you fall in love with a property.</div>
+      </div>
+      <div class="criteria-item">
+        <div class="criteria-icon">💰</div>
+        <div class="criteria-title">Price Sweet Spot</div>
+        <div class="criteria-detail">The optimal range is <span class="criteria-highlight">$550K–$750K</span>. At this price point, the 4+ bedroom profile becomes realistic once you expand beyond the immediate campus area — which is exactly where the value is.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHICH BUYER -->
+<section class="mistakes-section" style="background: var(--navy);">
+  <div class="section-inner">
+    <div class="section-tag">Who This Is For</div>
+    <h2>Two Types of Buyers.<br><em>Both Valid.</em></h2>
+    <p class="section-lead">Not every family is optimizing for ROI — and that's completely fine. Here's how to know which approach fits your situation.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem;">
+
+      <div style="background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.25); padding: 2.5rem;">
+        <div style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;">The Investor Play</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 1.25rem; line-height: 1.2;">4–5 Bedrooms.<br>Rent covers the mortgage.</div>
+        <div style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem;">
+          The full strategy. 4–5 bedrooms, rent-by-the-room, roommates offset most or all of the carrying cost. Your student lives essentially for free while you build equity. This is the model the numbers in this guide are built around.
+        </div>
+        <div style="font-size: 0.78rem; color: var(--gold); font-weight: 600;">Best for: families who want the investment to carry itself</div>
+      </div>
+
+      <div style="background: rgba(30,48,80,0.5); border: 1px solid rgba(138,154,181,0.2); padding: 2.5rem;">
+        <div style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">The Lifestyle Play</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 1.25rem; line-height: 1.2;">3 Bedrooms.<br>Better place, some upside.</div>
+        <div style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem;">
+          A 3-bedroom won't generate enough rent to cover the mortgage — but that's not always the goal. Some parents simply want a nicer, safer place for their student than whatever's available to rent. One roommate helps offset costs, you build equity over 2 years, and the exit is often easier since 3BR properties appeal to a broader pool of buyers.
+        </div>
+        <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Best for: families prioritizing quality of living over cash flow</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.03); border-left: 3px solid rgba(201,168,76,0.4); padding: 1.5rem 2rem;">
+      <div style="font-size: 0.88rem; color: var(--text-body); line-height: 1.75;">
+        <strong style="color: var(--cream);">The honest truth:</strong> If you're going into it with eyes open and the budget to handle a monthly gap, the 3-bedroom can absolutely make sense. It's not the pure investment play — but real estate rarely needs to be all-or-nothing to be worth doing.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISTAKES -->
+<section class="mistakes-section">
+  <div class="section-inner">
+    <div class="section-tag">What to Avoid</div>
+    <h2>What Most Buyers<br><em>Get Wrong</em></h2>
+
+    <div class="mistakes-layout">
+      <div class="mistake-list">
+        <div class="mistake-item">
+          <div class="mistake-x">✕</div>
+          <div>
+            <div class="mistake-text">Buying during freshman year</div>
+            <div class="mistake-sub">You're carrying costs for 2 years before the rental income arrives. The policy made this even more expensive than it used to be.</div>
+          </div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✕</div>
+          <div>
+            <div class="mistake-text">Overpaying for "nice" turnkey homes</div>
+            <div class="mistake-sub">Pretty kitchens don't generate rent. Bedroom count and location do. Value-add properties almost always outperform move-in ready ones.</div>
+          </div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✕</div>
+          <div>
+            <div class="mistake-text">Ignoring rent-by-the-room strategy</div>
+            <div class="mistake-sub">Renting the whole house to one family generates a fraction of the income. The math only works room-by-room.</div>
+          </div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✕</div>
+          <div>
+            <div class="mistake-text">Not planning the exit before you buy</div>
+            <div class="mistake-sub">Who's your buyer in 2 years? If you can't answer that, you're speculating — not investing. We plan the exit at the start.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="advantage-box">
+        <h3>This Isn't Just<br><em>Buying a House</em></h3>
+        <p>It's structuring a deal. There's a meaningful difference — and it's why working with someone who thinks like an investor matters more than working with a typical agent.</p>
+        <div class="advantage-list">
+          <div class="advantage-point">
+            <span class="advantage-check">✓</span>
+            <span>Active real estate investor, not just a licensed agent</span>
+          </div>
+          <div class="advantage-point">
+            <span class="advantage-check">✓</span>
+            <span>Deep experience with rent-by-the-room structures</span>
+          </div>
+          <div class="advantage-point">
+            <span class="advantage-check">✓</span>
+            <span>Value-add renovation strategy built into every buy</span>
+          </div>
+          <div class="advantage-point">
+            <span class="advantage-check">✓</span>
+            <span>Creative financing: HELOC, low-down, co-sign structures</span>
+          </div>
+          <div class="advantage-point">
+            <span class="advantage-check">✓</span>
+            <span>Specific expertise in the Golden + Mines market</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-inner">
+    <div class="section-tag">Brendan Gustafson</div>
+    <h2>Investor Mindset.<br><em>Real-World Experience.</em></h2>
+
+    <div class="about-layout">
+      <div>
+        <div class="about-bio">
+          <p>Most real estate agents will help you find a house near Mines. <strong>I help you structure a deal.</strong> There's a significant difference — and it shows up in the quality of the outcome.</p>
+          <p>I'm an active real estate investor with hands-on experience in rent-by-the-room strategies, value-add renovations, and creative financing structures. The Golden and Mines market is one I know deeply — not just from the listings, but from the investing side.</p>
+          <p>The College Wealth Window framework came out of watching the policy shift unfold — and realizing that most buyers and agents hadn't adjusted their thinking yet. <strong>This is that adjustment.</strong></p>
+        </div>
+        <div class="about-credentials">
+          <div class="credential">
+            <div class="credential-label">Brokerage</div>
+            <div class="credential-value">Kentwood Real Estate</div>
+          </div>
+          <div class="credential">
+            <div class="credential-label">Specialty</div>
+            <div class="credential-value">Investment Strategy</div>
+          </div>
+          <div class="credential">
+            <div class="credential-label">Market</div>
+            <div class="credential-value">Golden + Greater Denver</div>
+          </div>
+          <div class="credential">
+            <div class="credential-label">Approach</div>
+            <div class="credential-value">Investor-First Mindset</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-block">
+        <div class="testimonial-quote">
+          Brendan was an absolute pro. Keeping calm, finding solutions and getting us a great deal. We look forward to working with him again!
+        </div>
+        <div class="testimonial-name">Anthony & Darla R.</div>
+        <div class="testimonial-sub">Kentwood Real Estate Clients</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div class="section-inner">
+    <div class="cta-inner">
+      <div class="section-tag" style="justify-content: center;">Ready to Move?</div>
+      <h2>Let's Build Your<br><em>2-Year Plan</em></h2>
+      <p class="section-lead">Whether you're a parent thinking ahead or an investor looking for structural demand — the conversation starts here.</p>
+
+      <div style="margin-top: 2.5rem; width: 100%; max-width: 640px; margin-left: auto; margin-right: auto;">
+        <iframe data-tally-src="https://tally.so/embed/dWjl6r?alignLeft=0&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+          loading="lazy"
+          width="100%"
+          height="400"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="College Wealth Window — Contact Form"
+          style="border: 1px solid rgba(201,168,76,0.2);">
+        </iframe>
+      </div>
+      <script async src="https://tally.so/widgets/embed.js"></script>
+
+      <div class="cta-contact-grid" style="margin-top: 2.5rem;">
+        <a href="tel:7202349375" class="cta-contact-item">
+          <div class="cta-contact-label">Call or Text</div>
+          <div class="cta-contact-value">720-234-9375</div>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#ef8d889a9c9b8e899c8081af848a819b9880808bc18c8082" class="cta-contact-item">
+          <div class="cta-contact-label">Email</div>
+          <div class="cta-contact-value">bgustafson@<br>kentwood.com</div>
+        </a>
+        <a href="https://bgustafson.kentwood.com" target="_blank" class="cta-contact-item">
+          <div class="cta-contact-label">Website</div>
+          <div class="cta-contact-value">bgustafson.<br>kentwood.com</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">College Wealth Window™</div>
+  <div class="footer-copy">© 2025 Brendan Gustafson · Kentwood Real Estate · Results not guaranteed. Investment projections are illustrative only.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersectin
